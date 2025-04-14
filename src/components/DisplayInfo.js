@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './DisplayInfo.scss';
 
 // Stateful: Has state, can change and cause re-render.
@@ -67,9 +67,19 @@ import './DisplayInfo.scss';
 // function components
 const DisplayInfo = (props) => {
     const { listUsers } = props;
+    const [isShowHideListUser, setShowHideListUser] = useState(true);
+
+    const handleHideShowListUser = () => {
+        setShowHideListUser(!isShowHideListUser)
+    }
     return (
         <div>
-            {true &&
+            <div>
+                <span onClick={() => handleHideShowListUser()}>
+                    {isShowHideListUser === true ? 'Hide list users' : 'Display list users'}
+                </span>
+            </div>
+            {isShowHideListUser &&
                 <div>
                     {listUsers.map((user, index) => {
                         // console.log('>>Check list user:', user)
