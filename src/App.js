@@ -1,19 +1,27 @@
-import logo from './logo.svg';
 import './App.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
-import MyComponent from './components/MyComponent';
 import React from 'react';
+import Header from './components/Header/header';
+import { Link, Outlet } from 'react-router-dom';
 
 class App extends React.Component {
-    render() {
-      return(
-        <div>
-          Hello World with Bruyne
-          <MyComponent/>
+  render() {
+    return (
+      <div className='app-container'>
+        <div className='header-container'>
+          <Header />
         </div>
-      );
-    };
+        <div className='main-container'>
+          <div className='sidenav-container'>
+
+          </div>
+          <div className='app-content'>
+            <Outlet />
+          </div>
+        </div>
+
+      </div>
+    );
+  };
 };
 
 // const App = () => {
