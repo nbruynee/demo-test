@@ -1,0 +1,45 @@
+@keyframes shake {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-3px) rotate(-3deg); }
+    66% { transform: translateX(3px) rotate(3deg); }
+    100% { transform: translateX(0); }
+  }
+
+.admin-container {
+    display: flex;
+    flex-direction: row;
+    .admin-sidebar {
+        
+    }
+    .admin-content {
+        width: 100%;
+        .admin-header {
+            border-bottom: 1px solid rgba(173, 173, 173, 0.8);
+            .align-icon{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 10px;
+                background-color: rgba(170, 170, 170, 0.2) ;
+                width: 35px;
+                height: 35px;
+                border: none;
+                border-radius: 50%;
+                transition: all ease-in-out 0.5s;
+                svg {
+                    &:hover {
+                        animation: shake 0.5s ease-in-out 1 forwards;
+                        cursor: pointer;
+                    }
+                }
+                &:hover {
+                    color: #3e3040;
+                    background-color: rgba(170, 170, 170, 0.8) ;
+                }
+            }
+        }
+        .admin-main {
+
+        }
+    }
+}
