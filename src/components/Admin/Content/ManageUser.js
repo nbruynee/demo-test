@@ -2,6 +2,7 @@ import ModalCreateUser from './ModalCreateUser';
 import './ManageUser.scss'
 import { useState } from 'react';
 import { GoPlus } from "react-icons/go";
+import TableUser from './TableUser';
 
 const ManageUser = (props) => {
     const [showModalCreateUser, setShowModalCreateUser] = useState(false)
@@ -17,7 +18,7 @@ const ManageUser = (props) => {
                     </button>
                 </div>
                 <div>
-                    Table users
+                    <TableUser />
                 </div>
                 <ModalCreateUser
                     show={showModalCreateUser}
