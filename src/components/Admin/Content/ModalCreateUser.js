@@ -2,12 +2,10 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import axios from 'axios';
 
-const ModalCreateUser = () => {
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+const ModalCreateUser = (props) => {
+    const { show, setShow } = props;
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,6 +13,16 @@ const ModalCreateUser = () => {
     const [role, setRole] = useState("USER");
     const [image, setImage] = useState("");
     const [previewImg, setPreviewImg] = useState("")
+
+    const handleClose = () => {
+        setShow(false);
+        setEmail("");
+        setPassword("");
+        setUsername("");
+        setRole("USER");
+        setImage("");
+        setPreviewImg("");
+    };
 
     const handleUploadImg = (event) => {
         // console.log('>>Check:', event.target.files[0])
@@ -24,11 +32,30 @@ const ModalCreateUser = () => {
         }
     }
 
+    const handleSubmitCreateUser = async () => {
+        // validate
+
+        // call APIs
+        // let data = {
+        //     email: email,
+        //     password: password,
+        //     username: username,
+        //     role: role,
+        //     userImage : image,
+        // }
+        const form = new FormData();
+        form.append('email', email);
+        form.append('password', password);
+        form.append('username', username);
+        form.append('role', role);
+        form.append('userImage', image);
+
+        let res = await axios.post('http://localhost:8081/api/v1/participant', form)
+        console.log("check res: ", res)
+    }
+
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Launch demo modal
-            </Button>
             <Modal show={show} onHide={handleClose}
                 animation={false}
                 size='xl' backdrop="static"
@@ -82,7 +109,7 @@ const ModalCreateUser = () => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
                         Save
                     </Button>
                 </Modal.Footer>

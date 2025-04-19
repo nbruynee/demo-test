@@ -3,7 +3,17 @@
 
     }
     .users-content{
-
+        .btn-add-new{
+            button {
+                display: flex;
+                align-items: center;
+                padding: 6px 10px;
+                border: none;
+                border-radius: 6px;
+                gap: 6px;
+                cursor: pointer;
+            }
+        }
     }
 }
 
