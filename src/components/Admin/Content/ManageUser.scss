@@ -34,6 +34,12 @@
             }
         }
     }
+    .table-users-container{
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
 }
 
 .modal-add-user {
