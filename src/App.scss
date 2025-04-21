@@ -25,11 +25,19 @@ body {
         .navbar-nav {
           display: flex;
           align-items: center;
+          height: 40px;
+          padding: 0 15px;
           font-size: 15px;
+          font-weight: 600;
+          color: #3e3040;
+          background-color: transparent;
+          border: none;
           gap: 10px;
+          cursor: pointer;
+          transition: all ease-in-out 0.5s;
           .nav-link {
             &.active {
-              color: red;
+              color: #a25fba;
             }
           }
           .signup-btn {
@@ -95,13 +103,15 @@ body {
           align-items: center;
           color: #ffffff;
           background-color: #3e3040;
+          font-weight: 600;
           padding: 10px 26px;
           border: none;
           border-radius: 8px;
           transition: all ease-in-out 0.5s;
           &:hover {
             border-radius: 14px;
-            background-color: rgba(62, 48, 64, 0.8);
+            color: rgba(162, 95, 186, 0.6);
+            background-color: rgba(255, 229, 217, 0.8);
           }
         }
       }

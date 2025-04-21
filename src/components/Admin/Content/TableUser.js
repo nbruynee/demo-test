@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
-import { getAllUser } from "../../../service/apiService";
+const TableUser = (props) => {
+    const { listUser } = props;
 
-const TableUser = () => {
-    const [listUser, setListUser] = useState([]);
-
-    useEffect(() => {
-        fetchListUser();
-    }, []);
-    const fetchListUser = async () => {
-        let res = await getAllUser();
-        console.log('>>>check res:',res);
-        if (res.EC === 0) {
-            setListUser(res.DT);
-        }
-    }
     return (
         <div>
-            <table className="table table-hover">
+            <table className="table table-bordered table-hover rounded-4 overflow-hidden mt-4">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
@@ -31,14 +18,20 @@ const TableUser = () => {
                         listUser.map((item, index) => {
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <td>{index + 1}</td>
+                                    <td>{item.id}</td>
                                     <td>{item.username}</td>
                                     <td>{item.email}</td>
                                     <td>{item.role}</td>
                                     <td>
                                         <button className="btn btn-outline-primary me-3">View</button>
-                                        <button className="btn btn-outline-success me-3">Update</button>
-                                        <button className="btn btn-outline-danger">Delete</button>
+                                        <button className="btn btn-outline-success me-3"
+                                            onClick={() => props.handClickUpdateUser(item)}>
+                                            Update
+                                        </button>
+                                        <button className="btn btn-outline-danger"
+                                        onClick={() => props.handClickDeleteUser(item)}>
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             )
@@ -49,7 +42,6 @@ const TableUser = () => {
                             <td>Not found data</td>
                         </tr>
                     }
-
                 </tbody>
             </table>
         </div>
