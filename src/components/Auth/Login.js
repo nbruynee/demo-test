@@ -6,11 +6,13 @@ import logo from "../../assets/images/quiz.png"
 import loginVideo from "../../assets/videos/video-login.mp4"
 import "./Login.scss"
 import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,18 +36,18 @@ const Login = (props) => {
             toast.error("Invalid password")
             return;
         }
+        setIsLoading(true);
         // submit APIs
         let data = await postLogin(email, password);
         if (data && data.EC === 0) {
-            dispatch({
-                type: 'FETCH_USER_LOGIN_SUCCESS',
-                payload: data,
-            })
+            dispatch(doLogin(data));
             toast.success(data.EM);
-            navigate("/")
+            setIsLoading(false);
+            navigate("/");
         }
         if (data && data.EC !== 0) {
             toast.error(data.EM);
+            setIsLoading(false);
         }
 
     }
@@ -91,7 +93,19 @@ const Login = (props) => {
                                 </div>
                                 <div className="container-btn-submit">
                                     <button
-                                        onClick={() => handleSubmit()}>Log in</button>
+                                        onClick={() => handleSubmit()}
+                                        disabled={isLoading}>
+                                        {isLoading === true && <div className="loading-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-loader-pinwheel-icon lucide-loader-pinwheel">
+                                                <path d="M22 12a1 1 0 0 1-10 0 1 1 0 0 0-10 0" />
+                                                <path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6" />
+                                                <path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6" />
+                                                <circle cx="12" cy="12" r="10" />
+                                            </svg>
+                                        </div>
+                                        }
+                                        <span>Log in</span>
+                                    </button>
                                 </div>
                                 <div className="container-back-homepg">
                                     <span onClick={() => navigate("/")}>

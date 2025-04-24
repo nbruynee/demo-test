@@ -120,6 +120,11 @@ const SignIn = (props) => {
                                 <div className="container-btn-submit">
                                     <button onClick={() => handleRegister()}>Register</button>
                                 </div>
+                                <div className="container-back-homepg">
+                                    <span onClick={() => navigate("/")}>
+                                        &larr;&nbsp;Go to Home Page
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

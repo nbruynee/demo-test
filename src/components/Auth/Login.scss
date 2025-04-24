@@ -110,17 +110,32 @@
                             justify-content: center;
                             margin-top: 10px;
                             button {
-                                border: none;
+                                display: flex;
+                                align-items: center;
                                 color: #ffffff;
                                 font-weight: 600;
-                                padding: 10px 120px;
+                                padding: 10px 165px;
+                                margin: 0px 10px;
                                 margin-top: 10px;
                                 background-color: rgb(60, 50, 62);
+                                border: none;
                                 border-radius: 10px;
+                                gap: 5px;
                                 transition: all ease-in-out 0.5s;
                                 &:hover {
-                                    background-color: rgb(60, 50, 62, 0.9);
+                                    border-radius: 15px;
+                                }
+                                &:disabled {
                                     color: #a25fba;
+                                    background-color: rgb(60, 50, 62, 0.9);;
+                                    cursor: no-drop
+                                }
+                                .loading-icon {
+                                    svg {
+                                        width: 20px;
+                                        height: 20px;
+                                        animation: spin 1.5s infinite linear;;
+                                    }
                                 }
                             }
                         }
@@ -161,5 +176,14 @@
                 
             }
         }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
     }
 }

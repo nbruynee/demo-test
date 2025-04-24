@@ -149,6 +149,26 @@
                                 }
                             }
                         }
+                        .container-back-homepg {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-top: 25px;
+                            span {
+                                padding: 4px 15px;
+                                font-weight: 600;
+                                border: none;
+                                border-radius: 10px;
+                                transition: all ease-in-out 0.5s;
+                                cursor: pointer;
+                                &:hover {
+                                    color: #a25fba;
+                                    text-decoration: underline;
+                                    text-underline-offset: 2px;
+                                }
+                            }
+                            
+                        }
                     }
                 }
             }
