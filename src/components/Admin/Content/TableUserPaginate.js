@@ -1,5 +1,4 @@
 import ReactPaginate from "react-paginate";
-import { useState, useEffect } from "react";
 
 const TableUserPaginate = (props) => {
     const { listUser, pageCount } = props;
@@ -7,11 +6,14 @@ const TableUserPaginate = (props) => {
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         props.fetchListUserWithPaginate(+event.selected + 1);
-        console.log(`User requested page number ${event.selected}`);
+        console.log(">>Check fetchListUserWithPaginate + TbUserP:", props.fetchListUserWithPaginate(+event.selected + 1))
+        props.setCurrentPage(+event.selected + 1);
+        console.log(">>Check setCurrentPage + TbUserP:", props.setCurrentPage(+event.selected + 1))
+        // console.log(`User requested page number ${event.selected}`);
     };
     return (
         <div>
-            <table className="table table-bordered table-hover rounded-4 overflow-hidden mt-4">
+            <table className="table table-bordered table-hover rounded-4 overflow-hidden mt-4 shadow">
                 <thead>
                     <tr>
                         <th scope="col">Id</th>
@@ -71,6 +73,7 @@ const TableUserPaginate = (props) => {
                 containerClassName="pagination"
                 activeClassName="active"
                 renderOnZeroPageCount={null}
+                forcePage={props.currentPage - 1}
             />
         </div>
     )

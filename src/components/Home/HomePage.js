@@ -1,7 +1,11 @@
 import React from "react";
 import BannerHome from "../../assets/videos/video-homepage.mp4"
+import { useSelector } from "react-redux";
 
 const HomePage = (props) => {
+    const account = useSelector(state => state.user.account); 
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+
     return (
         <>
             <div className="homepage-container">
