@@ -1,0 +1,14 @@
+.list-quiz-container {
+    display: flex;
+    margin: 20px 100px;
+    padding: 10px;
+    background-color: rgb(247, 247, 248);
+    border: none;
+    border-radius: 10px;
+    gap: 50px;
+    .empty-quiz {
+        color: #495057;
+        font-size: 18px;
+        font-weight: 600;
+    }
+}

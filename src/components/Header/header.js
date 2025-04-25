@@ -10,7 +10,7 @@ const Header = () => {
     const account = useSelector(state => state.user.account);
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
 
-    console.log("Account: ", account, "isAuthenticated: ", isAuthenticated)
+    // console.log("Account: ", account, "isAuthenticated: ", isAuthenticated)
     const navigate = useNavigate();
     const handleLogin = () => {
         navigate("/login");

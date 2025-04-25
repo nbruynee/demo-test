@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Admin from './components/Admin/Admin';
-import User from './components/User/user';
+// import User from './components/User/user';
 import HomePage from './components/Home/HomePage';
 import DashBoard from './components/Admin/Content/Dashboard';
 import ManageUser from './components/Admin/Content/ManageUser';
@@ -8,6 +8,16 @@ import Login from './components/Auth/Login';
 import SignIn from './components/Auth/SignIn';
 import App from './App';
 import { ToastContainer } from 'react-toastify';
+import ListQuiz from './components/User/ListQuiz';
+import DetailQuiz from './components/User/DetailQuiz';
+
+const NotFound = () => {
+    return (
+        <div className='container mt-3 alert alert-danger '>
+            404. Not found data with your current URL.
+        </div>
+    )
+}
 
 const Layout = (props) => {
     return (
@@ -15,8 +25,11 @@ const Layout = (props) => {
             <Routes>
                 <Route path='/' element={<App />}>
                     <Route index element={<HomePage />} />
-                    <Route path='users' element={<User />} />
+                    <Route path='users' element={<ListQuiz />} />
+                    {/* <Route path='quiz' element={<ListQuiz />}/> */}
                 </Route>
+                <Route path='/quiz/:id' element={<DetailQuiz />}/>
+
 
                 <Route path='/admins' element={<Admin />}>
                     <Route index element={<DashBoard />} />
@@ -25,7 +38,7 @@ const Layout = (props) => {
 
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignIn />} />
-
+                <Route path='*' element={<NotFound />} />
             </Routes>
             <ToastContainer
                 position="top-right"

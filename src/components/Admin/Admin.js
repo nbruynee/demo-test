@@ -3,7 +3,7 @@ import SideBar from "./SideBar";
 import { FaBars } from 'react-icons/fa';
 import "./Admin.scss"
 import { Outlet } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 
 const Admin = () => {
     const [collapsed, setCollapsed] = useState(false)

@@ -1,10 +1,11 @@
 import React from "react";
 import BannerHome from "../../assets/videos/video-homepage.mp4"
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const HomePage = (props) => {
-    const account = useSelector(state => state.user.account); 
     const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+    const navigate = useNavigate()
 
     return (
         <>
@@ -19,7 +20,11 @@ const HomePage = (props) => {
                     and your audience won't answer one.
                     Create a typeform instead and make everyone happy.
                 </div>
-                <button className="btn-1">Let's try now</button>
+                {isAuthenticated === false ? 
+                <button className="btn-1" onClick={()=> navigate("/login")}>Let's try now</button>
+                :
+                <button className="btn-1" onClick={() => navigate("/users")}>Doing quiz now</button>
+                } 
             </div>
         </>
 
