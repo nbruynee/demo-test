@@ -37,6 +37,7 @@ const DetailQuiz = (props) => {
                             questionDescription = item.description;
                             image = item.image;
                         }
+                        item.answers.isSelected = false;
                         answers.push(item.answers);
                         // console.log("Check anwers:", item.answers)
                     })
@@ -47,7 +48,6 @@ const DetailQuiz = (props) => {
             setDataQuiz(data)
         }
     }
-    // console.log("Check setDataQuiz:", dataQuiz)
 
     const handlePrevious = () => {
         if (index - 1 < 0) return;
@@ -59,6 +59,56 @@ const DetailQuiz = (props) => {
             setIndex(index + 1)
         }
     }
+
+    const handleCheckBox = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        let question = dataQuizClone.find(item => +item.questionId === +questionId)
+        if (question && question.answers) {
+            // console.log("Check q:", question);
+            question.answers = question.answers.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            })
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId)
+        if (index > -1) {
+            dataQuizClone[index] = question;
+            setDataQuiz(dataQuizClone);
+        }
+    }
+
+
+    const handleSubmitQuiz = () => {
+        console.log(">>>Check data before submit:", dataQuiz);
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        };
+        let answers = [];
+        if (dataQuiz && dataQuiz.length > 0) {
+            dataQuiz.forEach(question => {
+                let questionId = question.questionId;
+                let userAnswerId = [];
+                question.answers.forEach(ans => {
+                    if (ans.isSelected === true) {
+                        userAnswerId.push(ans.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId,
+                })
+            })
+            payload.answers = answers;
+            // console.log(">Check payload:", payload)
+        }
+    }
+
+
+    // console.log("Check setDataQuiz:", dataQuiz)
+
     return (
         <div className="detail-quiz-container">
             <div className="detail-quiz-wrapper">
@@ -71,6 +121,7 @@ const DetailQuiz = (props) => {
                             data={dataQuiz && dataQuiz.length > 0 ?
                                 dataQuiz[index] : []}
                             index={index}
+                            handleCheckBox={handleCheckBox}
                         />
                     </div>
                     <div className="container-btn">
@@ -83,6 +134,11 @@ const DetailQuiz = (props) => {
                             onClick={() => handleNext()}
                         >
                             Next
+                        </button>
+                        <button className="btn-submit"
+                            onClick={() => handleSubmitQuiz()}
+                        >
+                            Finish
                         </button>
                     </div>
                 </div>
