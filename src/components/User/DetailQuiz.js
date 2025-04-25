@@ -1,11 +1,20 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { getDataQuiz } from "../../service/apiService";
 import _ from "lodash"
+import "./DetailQuiz.scss"
+import Question from "./Question";
 
 const DetailQuiz = (props) => {
+    const [dataQuiz, setDataQuiz] = useState([]);
+    const [index, setIndex] = useState(0);
+
     const params = useParams();
     // console.log("Chech params:", params)
+
+    const location = useLocation();
+    // console.log("Check location:", location);
+
     const quizId = params.id;
 
     useEffect(() => {
@@ -34,13 +43,53 @@ const DetailQuiz = (props) => {
                     return { questionId: key, answers, questionDescription, image }
                 })
                 .value()
-            console.log("Check data", data);
+            // console.log("Check data", data);
+            setDataQuiz(data)
         }
     }
+    // console.log("Check setDataQuiz:", dataQuiz)
 
+    const handlePrevious = () => {
+        if (index - 1 < 0) return;
+        setIndex(index - 1);
+    }
+
+    const handleNext = () => {
+        if (dataQuiz && dataQuiz.length > index + 1) {
+            setIndex(index + 1)
+        }
+    }
     return (
         <div className="detail-quiz-container">
-            DetailQuiz
+            <div className="detail-quiz-wrapper">
+                <div className="left-content-container">
+                    <div className="tilte">
+                        <span>Quiz {quizId}: {location?.state?.quizTitle}</span>
+                    </div>
+                    <div className="question-answer-container">
+                        <Question
+                            data={dataQuiz && dataQuiz.length > 0 ?
+                                dataQuiz[index] : []}
+                            index={index}
+                        />
+                    </div>
+                    <div className="container-btn">
+                        <button className="btn-prev"
+                            onClick={() => handlePrevious()}
+                        >
+                            Prev
+                        </button>
+                        <button className="btn-next"
+                            onClick={() => handleNext()}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+                <div className="right-content-container">
+                    asdasdasd
+                </div>
+            </div>
         </div>
     )
 }
