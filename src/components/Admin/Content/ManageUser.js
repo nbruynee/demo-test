@@ -58,7 +58,7 @@ const ManageUser = (props) => {
         // console.log("Check clicked:", user)
         setShowModalDeleteUser(true);
         setDataDelete(user);
-        console.log("Set data delete:", setDataDelete(user))
+        // console.log("Set data delete:", setDataDelete(user))
     }
 
     return (

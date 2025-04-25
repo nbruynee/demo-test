@@ -1,0 +1,83 @@
+.question-container {
+    padding: 8px 35px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    .title {
+        padding: 10px 0;
+        font-size: 22px;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(173, 173, 173, 0.8);
+    }
+    .add-new-question {
+        margin-top: 25px;
+        .tx {
+            font-size: 15px;
+            font-weight: 600;
+            color: #343a40;
+        }
+        .question-content{
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            .description {
+                width: 50%;
+            }
+            .group-upload{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                .label-upload {
+                    padding: 4px 8px;
+                    border-radius: 10px;
+                    background-color: #96d7ff;
+                }
+            }
+            .btn-container {
+                display: flex;
+                gap: 20px;
+                .btn-add {
+                    width: 27px;
+                    height: 27px;
+                    color: #9ef01a;
+                    cursor: pointer;
+                }
+                .btn-delete {
+                    width: 27px;
+                    height: 27px;
+                    color: #ff4d6d;
+                    cursor: pointer;
+                }
+            }
+        }
+        .answer-content {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+            .size-fx {
+                width: 25px;
+                height: 25px;
+            }
+            .width {
+                width: 60%;
+            }
+            .btn-container {
+                display: flex;
+                gap: 20px;
+                .btn-add {
+                    width: 27px;
+                    height: 27px;
+                    color: #9ef01a;
+                    cursor: pointer;
+                }
+                .btn-delete {
+                    width: 27px;
+                    height: 27px;
+                    color: #ff4d6d;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

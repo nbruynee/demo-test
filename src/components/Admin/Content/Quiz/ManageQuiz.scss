@@ -1,0 +1,25 @@
+.quiz-container {
+    .title {
+        font-size: 30px;
+        font-weight: 600;
+        padding: 12px 15px;
+        margin-bottom: 30px;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 10px;
+    }
+    .add-new-container {
+        legend {
+            padding: 0 !important;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
+    .list-detail {
+        margin-top: 30px;
+        span {
+            font-weight: 600;
+            font-size: 20px;
+        }
+    }
+}
