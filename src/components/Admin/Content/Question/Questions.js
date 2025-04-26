@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import "./Questions.scss"
 import { FiPlusCircle } from "react-icons/fi";
@@ -7,40 +7,53 @@ import { AiOutlineMinusCircle } from "react-icons/ai";
 import { IoImageOutline } from "react-icons/io5";
 import { v4 as uuidv4 } from 'uuid';
 import Lightbox from "react-awesome-lightbox";
+import { toast } from 'react-toastify';
 import _ from "lodash"
 import "react-awesome-lightbox/build/style.css";
+import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../../service/apiService";
+
 
 const Questions = (props) => {
-    const [selectQuiz, setSelectQuiz] = useState({})
+    const initQuestions = [
+        {
+            id: uuidv4(),
+            description: '',
+            imageFile: '',
+            imageName: '',
+            answers: [
+                {
+                    id: uuidv4(),
+                    description: '',
+                    isCorrect: false,
+                },
+            ]
+        },
+    ]
+    const [selectedQuiz, setSelectedQuiz] = useState({})
     const [isPreviewImage, setIsPreviewImage] = useState(false)
+    const [questions, setQuestions] = useState(initQuestions)
     const [dataImagePreview, setDataImagePreview] = useState({
         url: '',
         title: ''
     })
+    const [listQuiz, setListQuiz] = useState([])
 
-    const [questions, setQuestions] = useState(
-        [
-            {
-                id: uuidv4(),
-                description: '',
-                imageFile: '',
-                imageName: '',
-                answers: [
-                    {
-                        id: uuidv4(),
-                        description: '',
-                        isCorrect: false,
-                    },
-                ]
-            },
-        ]
-    )
+    useEffect(() => {
+        fetchQuiz();
+    }, [])
 
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ];
+    const fetchQuiz = async () => {
+        let res = await getAllQuizForAdmin()
+        if (res && res.EC === 0) {
+            let newQuiz = res.DT.map(item => {
+                return {
+                    value: item.id,
+                    label: `${item.id} - ${item.name}`,
+                }
+            })
+            setListQuiz(newQuiz)
+        }
+    }
 
     const handleAddRemoveQuestion = (type, id) => {
         // console.log("Check type:", type, "id: ", id)
@@ -131,10 +144,6 @@ const Questions = (props) => {
         }
     }
 
-    const handleSubmitQuestionForQuiz = () => {
-
-    }
-
     const handlePreviewImage = (questionId) => {
         let questionsClone = _.cloneDeep(questions);
         let index = questionsClone.findIndex(item => item.id === questionId);
@@ -146,6 +155,65 @@ const Questions = (props) => {
             setIsPreviewImage(true)
         }
     }
+    const handleSubmitQuestionForQuiz = async () => {
+        // validate question 
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error("Please choose a Quiz!");
+            return;
+        }
+
+        let isValidQuestion = true;
+        let indexQ1 = 0;
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
+                isValidQuestion = false;
+                indexQ1 = i;
+                break;
+            }
+        }
+
+        if (isValidQuestion === false) {
+            toast.error(`Not empty description for Question ${indexQ1 + 1}`);
+            return;
+        }
+
+        // validate answer 
+        let isValidAnswer = true;
+        let indexQ = 0, indexA = 0;
+        for (let i = 0; i < questions.length; i++) {
+
+            for (let j = 0; j < questions[i].answers.length; j++) {
+                if (!questions[i].answers[j].description) {
+                    isValidAnswer = false;
+                    indexA = j;
+                    break;
+                }
+            }
+            indexQ = i;
+            if (isValidAnswer === false) break;
+        }
+
+        if (isValidAnswer === false) {
+            toast.error(`Not empty Answer ${indexA + 1} at Question ${indexQ + 1}`);
+            return;
+        }
+
+        // submit question
+        for (const question of questions) {
+            const q = await postCreateNewQuestionForQuiz(
+                +selectedQuiz.value,
+                question.description,
+                question.imageFile);
+            // submit answer
+            for (const answer of question.answers) {
+                await postCreateNewAnswerForQuestion(
+                    answer.description, answer.isCorrect, q.DT.id
+                );
+            }
+        }
+        toast.success("Create question and answers succeed")
+        setQuestions(initQuestions)
+    }
     return (
         <div className="question-container">
             <div className="title">
@@ -155,9 +223,10 @@ const Questions = (props) => {
                 <div className='col-6 form-group'>
                     <label className='mb-2 tx'>Select Quiz:</label>
                     <Select
-                        value={selectQuiz}
-                        onChange={setSelectQuiz}
-                        options={options}
+                        value={selectedQuiz}
+                        onChange={setSelectedQuiz}
+                        options={listQuiz}
+                        menuPortalTarget={document.body}
                     />
                 </div>
                 {questions && questions.length > 0 &&

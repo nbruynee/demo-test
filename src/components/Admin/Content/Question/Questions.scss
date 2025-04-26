@@ -12,6 +12,7 @@
     .add-new-question {
         margin-top: 25px;
         .form-group {
+            z-index: 1000;
             .tx {
                 font-size: 15px;
                 font-weight: 600;
