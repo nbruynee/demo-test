@@ -38,7 +38,7 @@ const ManageQuiz = (props) => {
             setName("");
             setDescription("");
             setType("")
-            setImage(null);
+            setImage("");
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
@@ -85,7 +85,7 @@ const ManageQuiz = (props) => {
                                     <input
                                         type="file"
                                         className="form-control p-2"
-                                        onChange={(event) => handleChangeFile(event)} />
+                                        onChange={(event) => handleChangeFile(event)} /> 
                                 </div>
                                 <div className='mt-3'>
                                     <button className='btn btn-success py-2 px-5'
