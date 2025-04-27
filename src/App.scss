@@ -6,7 +6,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
 }
 
 @media (min-width: 1350px) {
@@ -17,10 +16,11 @@ body {
 
 .app-container {
   .header-container {
-    z-index: 10;
     position: sticky;
+    height: 60px;
+    z-index: 10;
     .navbar {
-      background-color: transparent !important;
+      background-color: rgb(247, 247, 248);
       padding: 10px 0;
       .container {
         font-weight: 700;
@@ -89,8 +89,8 @@ body {
 }
   .main-container{ 
     width: 100vw;
-    height: 100vh;
-    overflow: auto;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
     .app-content {
       .homepage-container {
         .video-container {

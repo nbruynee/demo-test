@@ -1,17 +1,8 @@
-.question-container {
+.quiz-qa-container {
     padding: 8px 35px;
     border-radius: 10px;
-    background-color: #ffffff;
-    .title {
-        padding: 10px 0;
-        font-size: 22px;
-        font-weight: 600;
-        border-bottom: 1px solid rgba(173, 173, 173, 0.8);
-    }
     .add-new-question {
-        margin-top: 25px;
         .form-group {
-            z-index: 1000;
             .tx {
                 font-size: 15px;
                 font-weight: 600;

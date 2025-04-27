@@ -1,6 +1,8 @@
 .list-quiz-container {
     display: flex;
-    margin: 20px 100px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px auto;
     padding: 10px;
     background-color: rgb(247, 247, 248);
     border: none;

@@ -1,10 +1,12 @@
 import Select from 'react-select';
+import { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import TableQuiz from './TableQuiz';
-import { useState } from 'react';
 import { postCreateNewQuiz } from '../../../../service/apiService';
 import { toast } from 'react-toastify';
 import "./ManageQuiz.scss"
+import QuizQA from './QuizQA';
+import AssignQuiz from './AssignQuiz';
 
 const options = [
     { value: 'Easy', label: 'Easy' },
@@ -85,7 +87,7 @@ const ManageQuiz = (props) => {
                                     <input
                                         type="file"
                                         className="form-control p-2"
-                                        onChange={(event) => handleChangeFile(event)} /> 
+                                        onChange={(event) => handleChangeFile(event)} />
                                 </div>
                                 <div className='mt-3'>
                                     <button className='btn btn-success py-2 px-5'
@@ -95,13 +97,26 @@ const ManageQuiz = (props) => {
                                 </div>
                             </fieldset>
                         </div>
+                        <div className="list-detail">
+                            <span>List Quiz</span>
+                            <TableQuiz />
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Manage Q/A Quiz</Accordion.Header>
+                    <Accordion.Body>
+                        <QuizQA />
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header>Assign to Users</Accordion.Header>
+                    <Accordion.Body>
+                        <AssignQuiz/>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-            <div className="list-detail">
-                <span>List Quiz</span>
-                <TableQuiz />
-            </div>
+
         </div>
     )
 }

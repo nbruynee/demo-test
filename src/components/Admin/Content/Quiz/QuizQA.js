@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
-import "./Questions.scss"
+import "./QuizQA.scss"
 import { FiPlusCircle } from "react-icons/fi";
 import { BsTrash } from "react-icons/bs";
 import { AiOutlineMinusCircle } from "react-icons/ai";
@@ -10,10 +10,10 @@ import Lightbox from "react-awesome-lightbox";
 import { toast } from 'react-toastify';
 import _ from "lodash"
 import "react-awesome-lightbox/build/style.css";
-import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion } from "../../../../service/apiService";
+import { getAllQuizForAdmin, postCreateNewQuestionForQuiz, postCreateNewAnswerForQuestion, getQuizWithQA } from "../../../../service/apiService";
 
 
-const Questions = (props) => {
+const QuizQA = (props) => {
     const initQuestions = [
         {
             id: uuidv4(),
@@ -29,18 +29,53 @@ const Questions = (props) => {
             ]
         },
     ]
-    const [selectedQuiz, setSelectedQuiz] = useState({})
-    const [isPreviewImage, setIsPreviewImage] = useState(false)
-    const [questions, setQuestions] = useState(initQuestions)
+
     const [dataImagePreview, setDataImagePreview] = useState({
         url: '',
         title: ''
     })
+
+    const [isPreviewImage, setIsPreviewImage] = useState(false)
+    const [questions, setQuestions] = useState(initQuestions)
+
+    const [selectedQuiz, setSelectedQuiz] = useState({})
     const [listQuiz, setListQuiz] = useState([])
 
     useEffect(() => {
         fetchQuiz();
     }, [])
+
+    useEffect(() => {
+        if (selectedQuiz && selectedQuiz.value) {
+            fetchQuizWithQA();
+        }
+    }, [selectedQuiz])
+
+    const urltoFile = (url, filename, mimeType) => {
+        return fetch(url)
+            .then(res => res.arrayBuffer())
+            .then(buf => new File([buf], filename, { type: mimeType }));
+    }
+
+    const fetchQuizWithQA = async () => {
+        let res = await getQuizWithQA(selectedQuiz.value);
+        console.log(`>>Check res`, res)
+        if (res && res.EC === 0) {
+            // convert base64 to file object
+            let newQA = [];
+            for (let i = 0; i < res.DT.qa.length; i++) {
+                let q = res.DT.qa[i];
+                if (q.imageFile) {
+                    q.imageName = `Question-${q.id}.png`;
+                    q.imageFile =
+                        await urltoFile(`data:image/png;base64,${q.imageFile}`, `Question-${q.id}.png`, 'image/png')
+
+                }
+                newQA.push(q);
+            }
+            setQuestions(newQA);
+        }
+    }
 
     const fetchQuiz = async () => {
         let res = await getAllQuizForAdmin()
@@ -157,6 +192,11 @@ const Questions = (props) => {
     }
     const handleSubmitQuestionForQuiz = async () => {
         // validate question 
+        if (_.isEmpty(selectedQuiz)) {
+            toast.error("Please choose a Quiz!");
+            return;
+        }
+
         let isValidQuestion = true;
         let indexQ1 = 0;
         for (let i = 0; i < questions.length; i++) {
@@ -193,11 +233,6 @@ const Questions = (props) => {
             return;
         }
 
-        if (_.isEmpty(selectedQuiz)) {
-            toast.error("Please choose a Quiz!");
-            return;
-        }
-
         // submit question
         for (const question of questions) {
             const q = await postCreateNewQuestionForQuiz(
@@ -215,10 +250,7 @@ const Questions = (props) => {
         setQuestions(initQuestions)
     }
     return (
-        <div className="question-container">
-            <div className="title">
-                <span>Manage Questions</span>
-            </div>
+        <div className="quiz-qa-container">
             <div className="add-new-question">
                 {questions && questions.length > 0 &&
                     questions.map((question, index) => {
@@ -295,7 +327,6 @@ const Questions = (props) => {
                                                             <AiOutlineMinusCircle className='btn-delete' />
                                                         </span>
                                                     }
-
                                                 </div>
                                             </div>
                                         )
@@ -332,4 +363,4 @@ const Questions = (props) => {
     )
 }
 
-export default Questions;
+export default QuizQA;

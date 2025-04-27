@@ -26,7 +26,7 @@ const Header = () => {
                 {/* <Navbar.Brand href="/">Bruyne Quiz</Navbar.Brand> */}
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav className="me-auto bg-color">
                         <NavLink to="/" className="nav-link">Home</NavLink>
                         <NavLink to="/users" className="nav-link">Users</NavLink>
                         <NavLink to="/admins" className="nav-link">Admin</NavLink>
