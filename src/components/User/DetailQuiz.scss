@@ -158,6 +158,12 @@
                     &:hover {
                         background-color: #d8e2dc;
                     }
+                    &.selected {
+                        background-color: #adb5bd;
+                    }
+                    &.clicked{
+                        color:#f72634;
+                    }
                 }
             }
         }  
