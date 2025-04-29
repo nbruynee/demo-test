@@ -5,6 +5,7 @@ import _ from "lodash"
 import "./DetailQuiz.scss"
 import Question from "./Question";
 import ModalResult from "./ModalResult";
+import RightContent from "./Content/RightContent";
 
 const DetailQuiz = (props) => {
     const [dataQuiz, setDataQuiz] = useState([]);
@@ -133,7 +134,9 @@ const DetailQuiz = (props) => {
                     <div className="question-answer-container">
                         <Question
                             data={dataQuiz && dataQuiz.length > 0 ?
-                                dataQuiz[index] : []}
+                                dataQuiz[index] :
+                                []
+                            }
                             index={index}
                             handleCheckBox={handleCheckBox}
                         />
@@ -157,7 +160,10 @@ const DetailQuiz = (props) => {
                     </div>
                 </div>
                 <div className="right-content-container">
-                    asdasdasd
+                    <RightContent
+                        dataQuiz={dataQuiz}
+                        handleSubmitQuiz= {handleSubmitQuiz}
+                    />
                 </div>
                 <ModalResult
                     show={isShowModalResult}

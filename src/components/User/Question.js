@@ -1,7 +1,12 @@
 import _ from "lodash"
+import { useState } from "react";
+import Lightbox from "react-awesome-lightbox";
+import "react-awesome-lightbox/build/style.css";
+
 
 const Question = (props) => {
     const { data, index } = props;
+    const [isPreviewImage, setIsPreviewImage] = useState(false)
     if (_.isEmpty(data)) {
         return (<></>)
     }
@@ -15,7 +20,17 @@ const Question = (props) => {
         <>
             {data.image ?
                 <div className="container-img">
-                    <img src={`data:image/png;base64, ${data.image}`} />
+                    <img
+                        onClick={() => setIsPreviewImage(true)}
+                        src={`data:image/png;base64, ${data.image}`}
+                    />
+                    {isPreviewImage === true &&
+                        <Lightbox
+                            image={`data:image/png;base64, ${data.image}`}
+                            title={'Question-image'}
+                            onClose={() => setIsPreviewImage(false)}
+                        />
+                    }
                 </div>
                 :
                 <div className="container-img">
@@ -31,11 +46,11 @@ const Question = (props) => {
                             <div key={`answer-${index}`}
                                 className="a-child">
                                 <div className="form-check">
-                                    <input 
-                                    className="form-check-input" 
-                                    type="checkbox" 
-                                    checked={ans.isSelected}
-                                    onClick={(event) => handleChildCheckBox(event, ans.id, data.questionId)} />
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        checked={ans.isSelected}
+                                        onClick={(event) => handleChildCheckBox(event, ans.id, data.questionId)} />
                                     <label className="form-check-label">
                                         {ans.description}
                                     </label>
