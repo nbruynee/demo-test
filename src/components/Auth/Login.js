@@ -49,7 +49,13 @@ const Login = (props) => {
             toast.error(data.EM);
             setIsLoading(false);
         }
+    }
 
+    const handleKeyDown = (event) => {
+        // console.log(event.key)
+        if (event && event.key === "Enter") {
+            handleSubmit();
+        }
     }
     return (
         <div className="container-login">
@@ -85,7 +91,8 @@ const Login = (props) => {
                                         <input type="password"
                                             placeholder="Password"
                                             value={password}
-                                            onChange={(event) => setPassword(event.target.value)} />
+                                            onChange={(event) => setPassword(event.target.value)}
+                                            onKeyDown={(event) => handleKeyDown(event)} />
                                     </div>
                                 </div>
                                 <div className="forget-container">

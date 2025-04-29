@@ -23,24 +23,37 @@
             .align-icon{
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                margin: 10px;
-                background-color: #f8f9fa;
-                width: 35px;
-                height: 35px;
-                border: none;
-                border-radius: 50%;
-                transition: all ease-in-out 0.5s;
-                svg {
+                justify-content: space-between;
+                width: 100%;
+                span{
+                    display: flex;  
+                    align-items: center;
+                    justify-content: center;
+                    height: 35px;
+                    width: 35px;
+                    margin: 10px 15px;
+                    background-color: #f8f9fa;
+                    border: none;
+                    border-radius: 50%;
+                    transition: all ease-in-out 0.5s;
+                    svg {
+                        &:hover {
+                            animation: shake 0.5s ease-in-out 1 forwards;
+                            cursor: pointer;
+                        }
+                    }
                     &:hover {
-                        animation: shake 0.5s ease-in-out 1 forwards;
-                        cursor: pointer;
+                        color: rgba(162, 95, 186, 0.6);
+                        background-color: rgba(170, 170, 170, 0.4) ;
                     }
                 }
-                &:hover {
-                    color: rgba(162, 95, 186, 0.6);
-                    background-color: rgba(170, 170, 170, 0.4) ;
-                }
+                .container-dropdown{
+                    .nav-item {
+                        margin-right: 40px;
+                        font-size: 18px;
+                        font-weight: 600;
+                    }
+                }                
             }
         }
         .admin-main {
