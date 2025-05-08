@@ -1,12 +1,14 @@
 import Select from 'react-select';
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import Accordion from 'react-bootstrap/Accordion';
 import TableQuiz from './TableQuiz';
-import { postCreateNewQuiz } from '../../../../service/apiService';
+import { getAllQuizForAdmin, postCreateNewQuiz } from '../../../../service/apiService';
 import { toast } from 'react-toastify';
 import "./ManageQuiz.scss"
 import QuizQA from './QuizQA';
 import AssignQuiz from './AssignQuiz';
+import ModalUpdateQuiz from './ModalUpdateQuiz';
+import ModalDeleteQuiz from './ModalDeleteQuiz';
 
 const options = [
     { value: 'Easy', label: 'Easy' },
@@ -19,6 +21,26 @@ const ManageQuiz = (props) => {
     const [description, setDescription] = useState('');
     const [type, setType] = useState("");
     const [image, setImage] = useState(null);
+
+    const [listQuiz, setListQuiz] = useState([]);
+
+    const [isShowModalUpdate, setIsShowModalUpdate] = useState(false);
+    const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+    const [dataUpdate, setDataUpdate] = useState({});
+    const [dataDelete, setDataDelete] = useState({});
+
+    const fetchQuiz = async () => {
+        setDataUpdate({});
+        setDataDelete({});
+        let res = await getAllQuizForAdmin()
+        if (res && res.EC === 0) {
+            setListQuiz(res.DT);
+        }
+    }
+
+    useEffect(() => {
+        fetchQuiz();
+    }, [])
 
     const handleChangeFile = (event) => {
         if (event.target && event.target.files && event.target.files[0]) {
@@ -41,11 +63,23 @@ const ManageQuiz = (props) => {
             setDescription("");
             setType("")
             setImage("");
+            fetchQuiz();
         }
         if (res && res.EC !== 0) {
             toast.error(res.EM);
         }
     }
+
+    const handleUpdate = (quiz) => {
+        setDataUpdate(quiz);
+        setIsShowModalUpdate(true);
+    }
+
+    const handleDelete = (quiz) => {
+        setDataDelete(quiz);
+        setIsShowModalDelete(true);
+    }
+
     return (
         <div className="quiz-container">
             <div className="title">
@@ -99,7 +133,12 @@ const ManageQuiz = (props) => {
                         </div>
                         <div className="list-detail">
                             <span>List Quiz</span>
-                            <TableQuiz />
+                             <TableQuiz
+                                 listQuiz={listQuiz}
+                                 handleUpdate={handleUpdate}
+                                 handleDelete={handleDelete}
+                                 fetchQuiz={fetchQuiz}
+                             />
                         </div>
                     </Accordion.Body>
                 </Accordion.Item>
@@ -116,7 +155,19 @@ const ManageQuiz = (props) => {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
-
+            <ModalUpdateQuiz
+                show={isShowModalUpdate}
+                setShow={setIsShowModalUpdate}
+                dataUpdate={dataUpdate}
+                 fetchQuiz={fetchQuiz}
+                setDataUpdate={setDataUpdate}
+            />
+             <ModalDeleteQuiz
+                 show={isShowModalDelete}
+                 setShow={setIsShowModalDelete}
+                 dataDelete={dataDelete}
+                 fetchQuiz={fetchQuiz}
+             />
         </div>
     )
 }

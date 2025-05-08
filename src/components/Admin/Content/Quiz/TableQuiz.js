@@ -1,37 +1,7 @@
-import { useEffect, useState } from "react";
-import { getAllQuizForAdmin } from "../../../../service/apiService";
-import ModalUpdateQuiz from "./ModalUpdateQuiz";
-import ModalDeleteQuiz from "./ModalDeleteQuiz";
 
 const TableQuiz = (props) => {
-    const [listQuiz, setListQuiz] = useState([]);
-    const [isShowModalUpdate, setIsShowModalUpdate] = useState(false);
-    const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-    const [dataUpdate, setDataUpdate] = useState({});
-    const [dataDelete, setDataDelete] = useState({});
+    const { listQuiz, handleUpdate, handleDelete, fetchQuiz } = props;
 
-    useEffect(() => {
-        fetchQuiz();
-    }, [])
-
-    const fetchQuiz = async () => {
-        setDataUpdate({});
-        setDataDelete({});
-        let res = await getAllQuizForAdmin()
-        if (res && res.EC === 0) {
-            setListQuiz(res.DT);
-        }
-    }
-
-    const handleUpdate = (quiz) => {
-        setDataUpdate(quiz);
-        setIsShowModalUpdate(true);
-    }
-
-    const handleDelete = (quiz) => {
-        setDataDelete(quiz);
-        setIsShowModalDelete(true);
-    }
     return (
         <>
             <table className="table table-hover table-bordered shadow-sm mt-2 rounded-4 overflow-hidden">
@@ -45,7 +15,7 @@ const TableQuiz = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listQuiz &&
+                    {listQuiz && listQuiz.length > 0 &&
                         listQuiz.map((item, index) => {
                             return (
                                 <tr key={`table-quiz-${index}`}>
@@ -70,19 +40,6 @@ const TableQuiz = (props) => {
 
                 </tbody>
             </table>
-            <ModalUpdateQuiz
-                show={isShowModalUpdate}
-                setShow={setIsShowModalUpdate}
-                dataUpdate={dataUpdate}
-                fetchQuiz={fetchQuiz}
-                setDataUpdate={setDataUpdate}
-            />
-            <ModalDeleteQuiz
-                show={isShowModalDelete}
-                setShow={setIsShowModalDelete}
-                dataDelete={dataDelete}
-                fetchQuiz={fetchQuiz}
-            />
         </>
     )
 }

@@ -169,3 +169,12 @@
         }  
     }
 }
+.quiz-detail-new-header{
+    padding: 20px 46px;
+    .breadcrumb-item {
+        color: #5e60ce;
+        &:link {
+            text-decoration: none;
+        }
+    }
+}

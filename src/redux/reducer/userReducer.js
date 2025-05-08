@@ -1,5 +1,5 @@
 import { DECREMENT } from '../action/counterAction';
-import { FETCH_USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS } from '../action/userAction';
+import { FETCH_USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS, USER_UPDATE_SUCCESS } from '../action/userAction';
 
 const INITIAL_STATE = {
     account: {
@@ -41,6 +41,15 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     email: "",
                 },
                 isAuthenticated: false
+            };
+
+        case USER_UPDATE_SUCCESS:
+            return {
+                ...state,
+                account: {
+                    ...state.account,
+                    ...action.payload
+                },
             };
         default: return state;
     }
