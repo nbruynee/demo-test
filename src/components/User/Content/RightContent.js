@@ -21,7 +21,7 @@ const RightContent = (props) => {
                 return "question selected"
             }
         }
-        return "question abc"
+        return "question"
     }
 
     const handleClickQuestion = (question, index) => {

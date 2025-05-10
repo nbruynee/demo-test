@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import _ from 'lodash';
 import { Button } from 'react-bootstrap';
 import { postUpdateProfile } from '../../service/apiService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { doUpdateUserSuccess } from '../../redux/action/userAction';
 
 const PersonalInfo = (props) => {
@@ -19,16 +19,14 @@ const PersonalInfo = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!_.isEmpty(userData)) {
+        if (userData &&!_.isEmpty(userData)) {
             setEmail(userData.email);
             setUsername(userData.username);
             setRole(userData.role);
+            setImage("")
             if (userData.image) {
                 setPreviewImg(`data:image/jpeg;base64,${userData.image}`);
-            } else {
-                 setPreviewImg("");
             }
-            setImage(null); 
         }
     }, [userData])
 

@@ -67,7 +67,7 @@ const Header = () => {
                                     </button>
                                 </>
                                 :
-                                <NavDropdown title="Setting" id="basic-nav-dropdown">
+                                <NavDropdown title={`Hello ${account.username}`} id="basic-nav-dropdown">
                                     <NavDropdown.Item onClick={()=> setIsShowModalProfile(true)}>Profile</NavDropdown.Item>
                                     <NavDropdown.Item onClick={() => handleLogout()}>Log out</NavDropdown.Item>
                                 </NavDropdown>

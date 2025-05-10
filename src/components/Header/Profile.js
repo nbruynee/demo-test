@@ -7,7 +7,7 @@ const Profile = (props) => {
     const { show, setShow, userData } = props;
     const [activeTab, setActiveTab] = useState('personal-info');
 
-    console.log("Check click:", activeTab)
+    // console.log("Check click:", activeTab)
 
     const handleCloseModal = () => {
         handleClose();
@@ -15,7 +15,7 @@ const Profile = (props) => {
 
     const handleTabSelect = (tabId) => {
         setActiveTab(tabId);
-        console.log("Selected Tab:", tabId);
+        // console.log("Selected Tab:", tabId);
     };
 
     const handleClose = () => setShow(false)
@@ -30,28 +30,25 @@ const Profile = (props) => {
                         <button className={`nav-link ${activeTab === 'personal-info' ? 'active' : ''}`}
                             id="home-tab"
                             data-bs-target="#home"
-                            type="button" 
+                            type="button"
                             role="tab"
                             aria-controls="home"
-                            onClick={() => setActiveTab('personal-info')}
+                            onClick={() => handleTabSelect('personal-info')}
                         >
                             Personal Information
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
                         <button className={`nav-link ${activeTab === 'change-password' ? 'active' : ''}`}
-                            id="profile-tab"                            
+                            id="profile-tab"
                             data-bs-target="#profile"
-                            type="button" 
+                            type="button"
                             role="tab"
                             aria-controls="profile"
-                            onClick={() => setActiveTab('change-password')}
+                            onClick={() => handleTabSelect('change-password')}
                         >
                             Change Password
                         </button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">View Quiz Done</button>
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
@@ -65,13 +62,8 @@ const Profile = (props) => {
                             <ChangePassword handleCloseModal={handleCloseModal} />
                         </div>
                     )}
-                    <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Nội dung tab Contact...</div> {/* Thêm nội dung mẫu */}
                 </div>
             </Modal.Body>
-            {/* <Modal.Footer>
-                // Tùy chọn: Thêm các nút ở footer nếu cần
-                <Button variant="secondary" onClick={handleClose}>Close</Button>
-            </Modal.Footer> */}
         </Modal>
     )
 }
